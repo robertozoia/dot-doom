@@ -1,0 +1,612 @@
+:DOC-CONFIG:
+# Tangle by default to config.el, which is the most common case
+#+property: header-args:emacs-lisp :tangle config.el
+#+property: header-args :mkdirp yes :comments no
+#+startup: fold
+:END:
+
+
+#+begin_src emacs-lisp :tangle init.el
+;;; init.el -*- lexical-binding: t; -*-
+
+;; This file controls what Doom modules are enabled and what order they load
+;; in. Remember to run 'doom sync' after modifying it!
+
+;; NOTE Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
+;;      documentation. There you'll find a "Module Index" link where you'll find
+;;      a comprehensive list of Doom's modules and what flags they support.
+
+;; NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
+;;      'C-c c k' for non-vim users) to view its documentation. This works on
+;;      flags as well (those symbols that start with a plus).
+;;
+;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
+;;      directory (for easy access to its source code).
+
+(doom! :input
+       ;;chinese
+       ;;japanese
+       ;;layout            ; auie,ctsrnm is the superior home row
+
+       :completion
+       company           ; the ultimate code completion backend
+       ;;helm              ; the *other* search engine for love and life
+       ;;ido               ; the other *other* search engine...
+       ivy               ; a search engine for love and life
+
+       :ui
+       ;;deft              ; notational velocity for Emacs
+       doom              ; what makes DOOMlook the way it does
+       doom-dashboard    ; a nifty splash screen for Emacs
+       doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       (emoji +unicode)  ; 🙂
+       ;;fill-column       ; a `fill-column' indicator
+       hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+       ;;hydra
+       ;;indent-guides     ; highlighted indent columns
+       ligatures         ; ligatures and symbols to make your code pretty again
+       ;;minimap           ; show a map of the code on the side
+       modeline          ; snazzy, Atom-inspired modeline, plus API
+       ;;nav-flash         ; blink cursor line after big motions
+       ;;neotree           ; a project drawer, like NERDTree for vim
+       ophints           ; highlight the region an operation acts on
+       (popup +defaults)   ; tame sudden yet inevitable temporary windows
+       tabs              ; a tab bar for Emacs
+       treemacs          ; a project drawer, like neotree but cooler
+       ;;unicode           ; extended unicode support for various languages
+       vc-gutter         ; vcs diff in the fringe
+       vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+       ;;window-select     ; visually switch windows
+       workspaces        ; tab emulation, persistence & separate workspaces
+       (zen +mixed-pitch +writeroom-mode) ; distraction-free coding or writing
+
+       :editor
+       (evil +everywhere); come to the dark side, we have cookies
+       file-templates    ; auto-snippets for empty files
+       fold              ; (nigh) universal code folding
+       (format +onsave)  ; automated prettiness
+       ;;god               ; run Emacs commands without modifier keys
+       ;;lispy             ; vim for lisp, for people who don't like vim
+       ;;multiple-cursors  ; editing in many places at once
+       ;;objed             ; text object editing for the innocent
+       ;;parinfer          ; turn lisp into python, sort of
+       ;;rotate-text       ; cycle region at point between text candidates
+       snippets          ; my elves. They type so I don't have to
+       word-wrap         ; soft wrapping with language-aware indent
+
+       :emacs
+       (dired +icons)             ; making dired pretty [functional]
+       electric          ; smarter, keyword-based electric-indent
+       ;;ibuffer         ; interactive buffer management
+       undo              ; persistent, smarter undo for your inevitable mistakes
+       vc                ; version-control and Emacs, sitting in a tree
+
+       :term
+       eshell            ; the elisp shell that works everywhere
+       ;;shell             ; simple shell REPL for Emacs
+       ;;term              ; basic terminal emulator for Emacs
+       ;;vterm             ; the best terminal emulation in Emacs
+
+       :checkers
+       syntax              ; tasing you for every semicolon you forget
+       (spell +aspell)   ; tasing you for misspelling mispelling
+       ;;grammar           ; tasing grammar mistake every you make
+
+       :tools
+       ;;ansible
+       ;;debugger          ; FIXME stepping through code, to help you add bugs
+       ;;direnv
+       docker
+       ;;editorconfig      ; let someone else argue about tabs vs spaces
+       ;;ein               ; tame Jupyter notebooks with emacs
+       (eval +overlay)     ; run code, run (also, repls)
+       ;;gist              ; interacting with github gists
+       lookup              ; navigate your code and its documentation
+       lsp
+       magit             ; a git porcelain for Emacs
+       ;;make              ; run make tasks from Emacs
+       ;;pass              ; password manager for nerds
+       ;;pdf               ; pdf enhancements
+       ;;prodigy           ; FIXME managing external services & code builders
+       ;;rgb               ; creating color strings
+       ;;taskrunner        ; taskrunner for all your projects
+       ;;terraform         ; infrastructure as code
+       ;;tmux              ; an API for interacting with tmux
+       ;;upload            ; map local to remote projects via ssh/ftp
+
+       :os
+       (:if IS-MAC macos)  ; improve compatibility with macOS
+       ;;tty               ; improve the terminal Emacs experience
+
+       :lang
+       ;;agda              ; types of types of types of types...
+       ;;cc                ; C/C++/Obj-C madness
+       ;;clojure             ; java with a lisp
+       ;;common-lisp       ; if you've seen one lisp, you've seen them all
+       ;;coq               ; proofs-as-programs
+       ;;crystal           ; ruby at the speed of c
+       ;;csharp            ; unity, .NET, and mono shenanigans
+       data              ; config/data formats
+       ;;(dart +flutter)   ; paint ui and not much else
+       ;;elixir            ; erlang done right
+       ;;elm               ; care for a cup of TEA?
+       emacs-lisp        ; drown in parentheses
+       ;;erlang            ; an elegant language for a more civilized age
+       ;;ess               ; emacs speaks statistics
+       ;;faust             ; dsp, but you get to keep your soul
+       ;;fsharp            ; ML stands for Microsoft's Language
+       ;;fstar             ; (dependent) types and (monadic) effects and Z3
+       ;;gdscript          ; the language you waited for
+       (go +lsp)         ; the hipster dialect
+       ;;(haskell +dante)  ; a language that's lazier than I am
+       ;;hy                ; readability of scheme w/ speed of python
+       ;;idris             ; a language you can depend on
+       json              ; At least it ain't XML
+       ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
+       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here))))))
+       ;;julia             ; a better, faster MATLAB
+       ;;kotlin            ; a better, slicker Java(Script)
+       ;;latex             ; writing papers in Emacs has never been so fun
+       ;;lean
+       ;;factor
+       ;;ledger            ; an accounting system in Emacs
+       ;;lua               ; one-based indices? one-based indices
+       markdown          ; writing docs for people to ignore
+       ;;nim               ; python + lisp at the speed of c
+       ;;nix               ; I hereby declare "nix geht mehr!"
+       ;;ocaml             ; an objective camel
+       (org +roam2 +journal +habit +pretty +hugo +protocol +pandoc +pomodoro +dragndrop)              ; organize your plain life in plain text
+       ;;php               ; perl's insecure younger brother
+       ;;plantuml          ; diagrams for confusing people more
+       ;;purescript        ; javascript, but functional
+       (python +pyenv +lsp)            ; beautiful is better than ugly
+       ;;qt                ; the 'cutest' gui framework ever
+       ;;racket            ; a DSL for DSLs
+       ;;raku              ; the artist formerly known as perl6
+       ;;rest              ; Emacs as a REST client
+       ;;rst               ; ReST in peace
+       ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;;scala             ; java, but good
+       ;;scheme            ; a fully conniving family of lisps
+       sh                ; she sells {ba,z,fi}sh shells on the C xor
+       ;;sml
+       ;;solidity          ; do you need a blockchain? No.
+       ;;swift             ; who asked for emoji variables?
+       ;;terra             ; Earth and Moon in alignment for performance.
+       (web +lsp)               ; the tubes
+       yaml              ; JSON, but readable
+
+       :email
+       (mu4e +org +gmail)
+       ;;(notmuch +org +afew)
+       ;;(wanderlust +gmail)
+
+       :app
+       ;;calendar
+       ;;irc               ; how neckbeards socialize
+       ;; (rss +org)        ; emacs as an RSS reader
+       ;;twitter           ; twitter client https://twitter.com/vnought
+
+       :config
+       ;;literate
+       (default +bindings +smartparens)
+
+       )
+
+
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle packages.el
+;; -*- no-byte-compile: t; -*-
+;;; $DOOMDIR/packages.el
+
+;; To install a package with Doom you must declare them here and run 'doom sync'
+;; on the command line, then restart Emacs for the changes to take effect -- or
+;; use 'M-x doom/reload'.
+
+
+;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
+;(package! some-package)
+
+;; To install a package directly from a remote git repo, you must specify a
+;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
+;; https://github.com/raxod502/straight.el#the-recipe-format
+;(package! another-package
+;  :recipe (:host github :repo "username/repo"))
+
+;; If the package you are trying to install does not contain a PACKAGENAME.el
+;; file, or is located in a subdirectory of the repo, you'll need to specify
+;; `:files' in the `:recipe':
+;(package! this-package
+;  :recipe (:host github :repo "username/repo"
+;           :files ("some-file.el" "src/lisp/*.el")))
+
+;; If you'd like to disable a package included with Doom, you can do so here
+;; with the `:disable' property:
+;(package! builtin-package :disable t)
+
+;; You can override the recipe of a built in package without having to specify
+;; all the properties for `:recipe'. These will inherit the rest of its recipe
+;; from Doom or MELPA/ELPA/Emacsmirror:
+;(package! builtin-package :recipe (:nonrecursive t))
+;(package! builtin-package-2 :recipe (:repo "myfork/package"))
+
+;; Specify a `:branch' to install a package from a particular branch or tag.
+;; This is required for some packages whose default branch isn't 'master' (which
+;; our package manager can't deal with; see raxod502/straight.el#279)
+;(package! builtin-package :recipe (:branch "develop"))
+
+;; Use `:pin' to specify a particular commit to install.
+;(package! builtin-package :pin "1a2b3c4d5e")
+
+
+;; Doom's packages are pinned to a specific commit and updated from release to
+;; release. The `unpin!' macro allows you to unpin single packages...
+;(unpin! pinned-package)
+;; ...or multiple packages
+;(unpin! pinned-package another-pinned-package)
+;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
+;(unpin! t)
+
+;; org-appear
+(package! org-appear
+  :recipe (:host github
+            :repo "awth13/org-appear"))
+
+(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+(package! vue-mode)
+
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle config.el
+;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
+
+
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets.
+(setq user-full-name "Roberto Zoia"
+      user-mail-address "roberto@zoia.org")
+
+;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
+;; are the three important ones:
+;;
+;; + `doom-font'
+;; + `doom-variable-pitch-font'
+;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;;
+;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
+;; font string. You generally only need these two:
+;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+;;       ;; Fira Code
+(setq doom-font (font-spec :family "SF Mono" :size 12 :weight 'medium)
+      doom-variable-pitch-font (font-spec :family "SF Pro" :weight 'light :size 14)
+      doom-unicode-font (font-spec :family "SF Mono" :size 12)
+      doom-big-font (font-spec :family "SF Mono" :size 18))
+
+;; (setq fancy-splash-image (concat doom-private-dir "splash/" "doom-emacs-bw-dark.svg"))
+(setq fancy-splash-image (concat doom-private-dir "splash/" "doom-emacs-color2.svg"))
+
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+(setq doom-theme 'doom-one)
+(setq doom-modeline-enable-word-count t)
+
+
+;; dictionaries
+(setq ispell-program-name "aspell")
+(setenv "DICTIONARY" "english")
+(setq ispell-dictionary "english")
+(add-to-list
+ 'ispell-local-dictionary-alist
+ '(("english" "[[:alpha::]]" "[^[:alpha]]" "[0-9']" t
+    ("-d" "english") nil utf-8)))
+
+(after! org
+  ;; If you use `org' and don't want your org files in the default location below,
+  ;; change `org-directory'. It must be set before org loads!
+  (setq org-directory "~/org")
+  (setq org-agenda-files '("~/org"))
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+
+  (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+  (setq org-mobile-inbox-for-pull "~/org/flagged.org")
+
+  ;; (set-face-attribute 'org-headline-done nil :strike-through t)
+
+  ;; org capture templates
+  ;;
+  ;; TODO make paths relative to org directories
+  (setq org-capture-templates
+        '(("b" "Blog idea" entry (file+headline "~/org/zoia-org.org" "Article ideas")
+           "* %?\n")
+          ("t" "Task"  entry (file org-default-notes-file)
+           "* TODO %?" :empty-lines 1)
+          ("q" "Quick note"  entry (file org-default-notes-file)
+           "* %?\n" :empty-lines 1)
+          ("1" "10 Business Ideas" entry (file+datetree "~/org/saas.org" "Business Ideas")
+           "* %?")
+          ("B" "Books worth considering" entry (file+headline "~/org/books.org" "Book recommendations")
+           "* %?\n")
+          ("C" "Contents to Current Clocked Task" plain
+                   (clock)
+                   "%i" :immediate-finish t :empty-lines 1))
+        )
+
+
+  (defun region-to-clocked-task (start end)
+    "Copies the selected text to the currently clocked in org-mode task."
+    (interactive "r")
+    (org-capture-string (buffer-substring-no-properties start end) "C"))
+
+ (global-set-key (kbd "C-<f9>") 'region-to-clocked-task )
+
+;; org-journal
+  (setq org-journal-dir "~/org/journal")
+  (setq org-journal-file-type 'monthly)
+  (setq org-journal-file-format "%Y-%m-%d.org")
+  (setq org-journal-date-prefix "* ")
+  (setq org-journal-date-format "%A, %Y-%m-%d")
+  (setq org-journal-enable-agenda-integration t
+        org-icalendar-store-UID t
+        org-icalendar-include-todo "all"
+        org-icalendar-combined-agenda-file "~/org/org-journal.ics")
+
+  ;;(setq org-journal-created-property-timestamp-format "%Y-%m-%d")
+  ;; org-roam
+  (setq org-roam-directory (file-truename "~/org-roam"))
+  (setq org-roam-index-file "Index.org")
+  (setq org-roam-v2-ack t)
+
+  ;; key bindings for org
+
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c c") 'org-capture)
+  (global-set-key (kbd "C-c d")
+                  (lambda () (interactive) (find-file "~/org/dashboard.org") ))
+
+  ;; have a better-looking org-mode
+  ;; Check here for inspiration/copy
+  ;; https://zzamboni.org/post/beautifying-org-mode-in-emacs/
+  ;;
+  ;;Ask org-mode to hide the emphasis markup
+  (setq org-hide-emphasis-markers t)
+
+  (add-hook! org-mode :append #'org-appear-mode)
+  (add-hook! org-mode :append #'mixed-pitch-mode)
+  (add-hook! org-mode :append #'visual-line-mode)
+  (add-hook! org-mode :append #'variable-pitch-mode)
+
+  ;; screenshot capture
+  ;; https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/
+  (setq org-download-method 'directory)
+  (setq org-download-image-dir "images")
+  (setq org-download-heading-lvl nil)
+  (setq org-download-timestamp "%Y%m%d-%H%M%S_")
+  (setq org-image-actual-width 300)
+  (setq org-download-screenshot-method "/opt/homebrew/bin/pngpaste %s")
+
+  (global-set-key (kbd "C-M-y") 'org-download-clipboard)
+
+  ;; elfeed-org
+  (setq rmh-elfeed-org-files (list "~/Dropbox/org/elfeed.org")))
+
+;; (setq org-appear-autolinks t)
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+
+;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+;; (setq inferior-lisp-program "sbcl")
+
+
+;; mu4e
+(after! mu4e
+  (setq mail-user-agent 'mu4e-user-agent)
+  (setq mu4e-backend 'mbsync)
+  (setq mu4e-get-mail-command "mbsync zoia-essential" )
+  (setq mu4e-change-filenames-when-moving t)
+
+  ;; remap trash
+  ;; https://rakhim.org/fastmail-setup-with-emacs-mu4e-and-mbsync-on-macos/
+
+  (fset 'my-move-to-trash "mTrash")
+  (define-key mu4e-headers-mode-map (kbd "d") 'my-move-to-trash)
+  (define-key mu4e-view-mode-map (kbd "d") 'my-move-to-trash)
+
+
+  ;; from https://rakhim.org/fastmail-setup-with-emacs-mu4e-and-mbsync-on-macos/
+  (setq
+   mu4e-headers-skip-duplicates t
+   mu4e-view-show-images t
+   mu4e-show-addresses t
+   mu4e-compose-format-flowed nil
+   mu4e-date-format "%Y-%m-%d"
+   mu4e-headers-date-format "%Y-%m-%d"
+   mu4e-change-filenames-when-moving t
+   mu4e-attachments-dir "~/Downloads"
+
+   mu4e-root-maildir "~/Dropbox/Maildir/zoiaorg"
+   mu4e-refile-folder "/Archive"
+   mu4e-sent-folder   "/Sent"
+   mu4e-drafts-folder "/Drafts"
+   mu4e-trash-folder  "/Trash")
+
+  (setq mu4e-use-fancy-chars t)
+  ;; update interval. Update every 5 minutes
+  (setq mu4e-update-interval 300)
+  (setq mu4e-view-use-gnus t)
+
+  ;; make messages look better in dark mode
+  (setq shr-color-visible-luminance-min 80)
+  ;; mu4e bookmarks
+  ;; https://www.djcbsoftware.nl/code/mu/mu4e/MV-Bookmarks.html
+  (add-to-list 'mu4e-bookmarks
+               '( :name "Mailing Lists"
+                  :key ?l
+                  :query "body:unsubscribe"))
+
+
+
+
+  ;; contexts for different accounts
+  ;;
+  ;; (setq mu4e-contexts
+  ;;     `( ,(make-mu4e-context
+  ;;          :name "zoia-org"
+  ;;          :enter-func (lambda () (mu4e-message "Entering zoia.org context"))
+  ;;          :leave-func (lambda () (mu4e-message "Leaving zoia.org context"))
+  ;;          :match-func (lambda (msg)
+  ;;                        (when msg
+  ;;                          (mu4e-message-contact-field-matches msg
+  ;;                                                              :to "roberto@zoia.org")))
+  ;;          :vars '( ( user-mail-address         . "roberto@zoia.org" )
+  ;;                   ( user-full-name            . "Roberto Zoia" )
+  ;;                   (mu4e-compose-signature     . nil)
+  ;;                   ;; server folders
+  ;;                   (mu4e-sent-folder           . "/zoia-org/[Gmail].Sent Mail")
+  ;;                   (mu4e-drafts-folder         . "/zoia-org/[Gmail].Drafts")
+  ;;                   (mu4e-trash-folder          . "/zoia-org/[Gmail].Trash")
+  ;;                   (mu4e-refile-folder         . "/zoia-org/[Gmail].All Mail")))
+  ;;       ,(make-mu4e-context
+  ;;          :name "robertozoia-gmail"
+  ;;          :enter-func (lambda () (mu4e-message "Entering roberto.zoia@gmail context"))
+  ;;          :leave-func (lambda () (mu4e-message "Leaving roberto.zoia@gmail context"))
+  ;;          :match-func (lambda (msg)
+  ;;                        (when msg
+  ;;                          (mu4e-message-contact-field-matches msg
+  ;;                                                            :to "roberto.zoia@gmail.com")))
+  ;;          :vars
+  ;;          '( (user-mail-address        . "roberto.zoia@gmail.com")
+  ;;             (user-full-name           . "Roberto Zoia")
+  ;;             (mu4e-compose-signature   . nil)
+  ;;             (mu4e-sent-folder         . "/robertozoia-gmail/[Gmail].Sent Mail")
+  ;;             (mu4e-drafts-folder       . "/robertozoia-gmail/[Gmail].Drafts")
+  ;;             (mu4e-trash-folder        . "/robertozoia-gmail/[Gmail].Trash")
+  ;;             (mu4e-refile-folder       . "/robertozoia-gmail/[Gmail].All Mail")))
+  ;;       ,(make-mu4e-context
+  ;;          :name "robertozoia-icloud"
+  ;;          :enter-func (lambda () (mu4e-message "Entering robertozoia@icloud.com context"))
+  ;;          :leave-func (lambda () (mu4e-message "Leaving robertozoia@icloud.com context"))
+  ;;          :match-func (lambda (msg)
+  ;;                         (when msg
+  ;;                           (mu4e-message-contact-field-matches msg
+  ;;                                                            :to "robertozoia@icloud.com")))
+  ;;          :vars
+  ;;          '( (user-mail-address        . "robertozoia@icloud.com")
+  ;;             (user-full-name           . "Roberto Zoia")
+  ;;             (mu4e-compose-signature   . nil)
+  ;;             (mu4e-sent-folder         . "/icloud/.Sent Messages")
+  ;;             (mu4e-drafts-folder       . "/icloud/Drafts")
+  ;;             (mu4e-trash-folder        . "/icloud/Trash")
+  ;;             (mu4e-refile-folder       . "/icloud/Archive")))
+  ;;       ,(make-mu4e-context
+  ;;          :name "rzoia-ideconsac"
+  ;;          :enter-func (lambda () (mu4e-message "Entering rzoia@ideconsac.com context"))
+  ;;          :leave-func (lambda () (mu4e-message "Leaving rzoia@ideconsac.com context"))
+  ;;          :match-func (lambda (msg)
+  ;;                         (when msg
+  ;;                           (mu4e-message-contact-field-matches msg
+  ;;                                                            :to "rzoia@ideconsac.com")))
+  ;;          :vars
+  ;;          '( (user-mail-address        . "rzoia@ideconsac.com")
+  ;;             (user-full-name           . "Roberto Zoia")
+  ;;             (mu4e-compose-signature   . nil)
+  ;;             (mu4e-sent-folder           . "/rzoia-ideconsac/[Gmail].Sent Mail")
+  ;;             (mu4e-drafts-folder         . "/rzoia-ideconsac/[Gmail].Drafts")
+  ;;             (mu4e-trash-folder          . "/rzoia-ideconsac/[Gmail].Trash")
+  ;;             (mu4e-refile-folder         . "/rzoia-ideconsac/[Gmail].All Mail")))
+  ;;       ,(make-mu4e-context
+  ;;          :name "rzoia-8c"
+  ;;          :enter-func (lambda () (mu4e-message "Entering rzoia@8consultores.com context"))
+  ;;          :leave-func (lambda () (mu4e-message "Leaving rzoia@8consultores.com context"))
+  ;;          :match-func (lambda (msg)
+  ;;                         (when msg
+  ;;                           (mu4e-message-contact-field-matches msg
+  ;;                                                            :to "rzoia@8consultores.com")))
+  ;;          :vars
+  ;;          '( (user-mail-address        . "rzoia@8consultores.com")
+  ;;             (user-full-name           . "Roberto Zoia")
+  ;;             (mu4e-compose-signature   . nil)
+  ;;             (mu4e-sent-folder           . "/zoia-8c/[Gmail].Sent Mail")
+  ;;             (mu4e-drafts-folder         . "/zoia-8c/[Gmail].Drafts")
+  ;;             (mu4e-trash-folder          . "/zoia-8c/[Gmail].Trash")
+  ;;             (mu4e-refile-folder         . "/zoia-8c/[Gmail].All Mail")))
+
+  ;;          ))
+
+
+
+  ;; set `mu4e-context-policy` and `mu4e-compose-policy` to tweak when mu4e should
+  ;; guess or ask the correct context
+  ;;
+  ;; Start with the first (default) context;
+  ;; default is to ask-if-none
+  ;;   (setq mu4e-context-policy 'pick-first)
+  ;;
+  ;; compose with the current context if no context matches
+  ;; default is to ask
+  ;; (setq mu4e-compose-context-policy nil)
+  ;;
+  ;;
+  (setq message-kill-buffer-on-exit t)
+  ;; (setq mu4e-org-link-query-in-headers-mode nil)
+
+  ;; enable inline images
+  (setq mu4e-view-show-images t)
+  ;; (setq mu4e-view-use-gnus t)
+  ;; use imagemagik when available
+  (when (fboundp 'imagemagick-register-types)
+    (imagemagick-register-types))
+
+  ;; msmtp
+  (setq sendmail-program "/opt/homebrew/bin/msmtp"
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-send-mail-function 'message-send-mail-with-sendmail
+        ;;smtpmail-queue-dir "~/Dropbox/Maildir/message-queue"
+      )
+
+  )
+
+;;
+;; IDE - Programming
+;;
+(global-set-key [f8] 'neotree-toggle)
+
+;; Here are some additional functions/macros that could help you configure Doom:
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packagesrwith
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
+
+;;
+;; TailwindCSS
+;; https://github.com/merrickluo/lsp-tailwindcss
+(use-package! lsp-tailwindcss)
+
+;; https://learnings.desipenguin.com/post/vuejs-with-doom-emacs-nvm/
+(add-hook 'vue-mode-hook #'lsp!)
+
+
+#+end_src
